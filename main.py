@@ -20,7 +20,7 @@ if __name__ == '__main__':
     cur = util.get_snowflake_conector()
     snowflake_table = "snwflk_TRADINGPRICE"
     snowflake_market = "RRP"
-    region = "SA"
+    region = "VIC"
     historical_data_start_date = datetime.datetime(year=2020,month=7,day=1,hour=0, minute=30,second=0)
     historical_data_end_date = datetime.datetime(year=2021,month=7,day=2,hour=0, minute=0,second=0) #extra day so leap years are easy
 
@@ -32,7 +32,7 @@ if __name__ == '__main__':
     sorted_ref_year_prices['PERCENTILE'] = sorted_ref_year_prices.index * (1 / len(sorted_ref_year_prices.index))
     snowflake_market = "RRP"
     snowflake_table = "FORWARD_CURVES"
-    forwards_version = "CORNWALL_2021_FD1"
+    forwards_version = "CORNWALL_2021"
 
 
     year_index = 2022
@@ -75,15 +75,16 @@ if __name__ == '__main__':
         #     final_prices_modified = final_prices_modified.append(resorted_forward_energy_prices,ignore_index = True)
         # print(resorted_forward_energy_prices)
 
-        year_index = year_index + 1
+        year_index = year_index + 5
 
 
     #final_prices_modified.to_csv(region + '_FDV1.csv', index=False)
 
-    ax = sns.lineplot(data=sorted_ref_year_prices.iloc[100:], x = 'PERCENTILE' ,y="RRP")
+    ax = sns.lineplot(data=sorted_ref_year_prices.iloc[20:], x = 'PERCENTILE' ,y="RRP")
     ax.xaxis.set_major_locator(ticker.MultipleLocator(0.05))
-    bx = sns.lineplot(data=sorted_forward_energy_prices.iloc[100:], x = 'PERCENTILE' ,y="RRP")
-    bx.xaxis.set_major_locator(ticker.MultipleLocator(0.05))
+    ax = sns.lineplot(data=sorted_forward_energy_prices.iloc[20:], x = 'PERCENTILE' ,y="RRP")
+    ax.xaxis.set_major_locator(ticker.MultipleLocator(0.05))
+    ax.legend(['Historical Jul 2020 to July 2021','Cornwall Modified V1 2022'])
     plt.show()
 
 
